@@ -6,13 +6,38 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq softwar
     && add-apt-repository ppa:no1wantdthisname/ppa && apt-get update && apt-get -y upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq nginx build-essential \
     language-pack-zh-hans-base xvfb x11vnc xterm megatools \
-    fonts-droid-fallback fonts-wqy-microhei fluxbox wmctrl google-chrome-stable lxterminal \
+    fonts-droid-fallback fonts-wqy-microhei fluxbox wmctrl firefox firefox-locale-zh-hans lxterminal \
     pcmanfm mousepad vim-nox emacs-nox aria2 python3-pip python3-dev python3-websockify \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo 'Asia/Shanghai' >/etc/timezone
 
-RUN echo 'nginx &' >>/bootstrap.sh
-RUN chmod 755 /bootstrap.sh
-EXPOSE 80
+# overwrite this env variable to use a different window manager
+ENV LANG="zh_CN.UTF-8" 
+ENV WINDOW_MANAGER="fluxbox"
+
+# Install novnc
+RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
+ && git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify \
+ && curl -O -L https://raw.githubusercontent.com/gitpod-io/workspace-images/master/full-vnc/novnc-index.html \
+ && curl -O -L https://raw.githubusercontent.com/gitpod-io/workspace-images/master/full-vnc/start-vnc-session.sh \
+ && mv novnc-index.html /opt/novnc/index.html \
+ && mv start-vnc-session.sh /usr/bin/ \
+ && chmod +x /usr/bin/start-vnc-session.sh \
+ && sed -ri "s/launch.sh/novnc_proxy/g" /usr/bin/start-vnc-session.sh \
+ && sed -ri "s/1920x1080/1366x830/g" /usr/bin/start-vnc-session.sh \
+ && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Gray \
+ && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Green \
+ && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Blue \
+ && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Purple \
+ && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Red \
+ && sed -ri '/Automatically generated/a\   \[exec\] \(Xterm\) \{ x-terminal-emulator -T "Bash" -e /bin/bash --login\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
+ && sed -ri '/Automatically generated/a\   \[exec\] \(LXterm\) \{lxterminal\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
+ && sed -ri '/Automatically generated/a\   \[exec\] \(Filemanager\) \{pcmanfm\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
+ && sed -ri '/Automatically generated/a\   \[exec\] \(Mousepad\) \{mousepad\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
+ && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
+ 
+RUN echo '/usr/bin/start-vnc-session.sh &' >>/bootstrap.sh
+RUN chmod +x /bootstrap.sh
+EXPOSE 6080
 CMD  /bootstrap.sh
