@@ -1,4 +1,4 @@
-FROM debian
+FROM ubuntu
 
 RUN apt-get update && apt-get -y upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq nginx \
