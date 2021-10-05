@@ -36,7 +36,7 @@ RUN echo 'export DISPLAY=1' >>/bootstrap.sh \
   && echo 'Xvfb -screen 1 "${CUSTOM_XVFB_WxHxD:=1366x800x16}" -ac -pn -noreset &' >>/bootstrap.sh \
   && echo '$WINDOW_MANAGER &' >>/bootstrap.sh \
   && echo 'x11vnc -localhost -shared -display :1 -forever -rfbport 5901 -bg -o "/tmp/x11vnc-1.log" ' >>/bootstrap.sh \
-  && echo 'cd /opt/novnc/utils && ./novnc_proxy --vnc "localhost:5901" --listen 80 &' >>/bootstrap.sh \
+  && echo 'cd /opt/novnc/utils && ./novnc_proxy --vnc "localhost:5901" --listen $PORT &' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
-EXPOSE 80
+EXPOSE $PORT
 CMD  /bootstrap.sh
