@@ -26,15 +26,16 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && chmod +x /usr/bin/start-vnc-session.sh \
  && sed -ri "s/launch.sh/novnc_proxy/g" /usr/bin/start-vnc-session.sh \
  && sed -ri "s/1920x1080/1366x830/g" /usr/bin/start-vnc-session.sh \
- && sed -ri "s/\$\{NOVNC_PORT\}/80/g" /usr/bin/start-vnc-session.sh \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Xterm\) \{ x-terminal-emulator -T "Bash" -e /bin/bash --login\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(LXterm\) \{lxterminal\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Filemanager\) \{pcmanfm\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Mousepad\) \{mousepad\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
  
-RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
-  && echo '/usr/bin/start-vnc-session.sh &' >>/bootstrap.sh \
+RUN echo 'Xvfb -screen 0 "${CUSTOM_XVFB_WxHxD:=1366x800x16}" -ac -pn -noreset &' >>/bootstrap.sh \
+  && echo '$WINDOW_MANAGER &' >>/bootstrap.sh \
+  && echo 'x11vnc -localhost -shared -display :0 -forever -rfbport 5900 -bg -o "/tmp/x11vnc-0.log" ' >>/bootstrap.sh \
+  && echo 'cd /opt/novnc/utils && ./novnc_proxy --vnc "localhost:5900" --listen 80 &' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE 80
 CMD  /bootstrap.sh
