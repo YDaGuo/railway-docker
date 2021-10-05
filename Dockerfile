@@ -35,7 +35,7 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
 RUN echo 'export DISPLAY=2' >>/bootstrap.sh \
   && echo 'Xvfb -screen 2 "${CUSTOM_XVFB_WxHxD:=1366x800x16}" -ac -pn -noreset &' >>/bootstrap.sh \
   && echo '$WINDOW_MANAGER &' >>/bootstrap.sh \
-  && echo 'x11vnc -localhost -shared -display :1 -forever -rfbport 5902 -bg -o "/tmp/x11vnc-2.log" ' >>/bootstrap.sh \
+  && echo 'x11vnc -localhost -shared -display :2 -forever -rfbport 5902 -bg -o "/tmp/x11vnc-2.log" ' >>/bootstrap.sh \
   && echo 'cd /opt/novnc/utils && ./novnc_proxy --vnc "localhost:5902" --listen 80 &' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE 80
