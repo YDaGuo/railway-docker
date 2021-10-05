@@ -32,7 +32,8 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Mousepad\) \{mousepad\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
  
-RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
+RUN echo 'cd ~ && echo $PORT' >>/bootstrap.sh \
+  && echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'Xvfb -screen 0 "${CUSTOM_XVFB_WxHxD:=1366x800x16}" -ac -pn -noreset &' >>/bootstrap.sh \
   && echo '$WINDOW_MANAGER &' >>/bootstrap.sh \
   && echo 'x11vnc -localhost -shared -display :0 -forever -rfbport 5900 -bg -o "/tmp/x11vnc-0.log" ' >>/bootstrap.sh \
