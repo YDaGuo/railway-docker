@@ -26,11 +26,6 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && chmod +x /usr/bin/start-vnc-session.sh \
  && sed -ri "s/launch.sh/novnc_proxy/g" /usr/bin/start-vnc-session.sh \
  && sed -ri "s/1920x1080/1366x830/g" /usr/bin/start-vnc-session.sh \
- && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Gray \
- && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Green \
- && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Blue \
- && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Purple \
- && sed -ri "s/Bitstream Vera Sans-9/WenQuanYi Micro Hei Mono-10/g" /usr/share/blackbox/styles/Red \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Xterm\) \{ x-terminal-emulator -T "Bash" -e /bin/bash --login\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(LXterm\) \{lxterminal\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Filemanager\) \{pcmanfm\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
