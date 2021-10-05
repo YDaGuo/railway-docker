@@ -36,7 +36,7 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
-  && echo 'nginx -c /etc/nginx/nginx.conf' >>/bootstrap.sh \
+  && echo 'nginx -g "daemon on; master_process on;"' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE $PORT
 CMD  /bootstrap.sh
