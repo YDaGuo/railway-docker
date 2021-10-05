@@ -32,7 +32,8 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Mousepad\) \{mousepad\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
  
-RUN echo '/usr/bin/start-vnc-session.sh &' >>/bootstrap.sh
-RUN chmod +x /bootstrap.sh
+RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
+  && echo '/usr/bin/start-vnc-session.sh &' >>/bootstrap.sh \
+  && chmod +x /bootstrap.sh
 EXPOSE 6080
 CMD  /bootstrap.sh
