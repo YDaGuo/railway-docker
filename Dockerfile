@@ -38,6 +38,7 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
   && echo 'nginx -g "daemon on; master_process on;" &' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
+  && echo 'curl http://localhost' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE $PORT
 CMD  /bootstrap.sh
