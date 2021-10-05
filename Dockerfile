@@ -36,6 +36,8 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
+  && echo 'systemctl enable nginx.service' >>/bootstrap.sh \
+  && echo 'systemctl start nginx.service' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE $PORT
 CMD  /bootstrap.sh
