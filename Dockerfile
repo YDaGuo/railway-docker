@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq software-properties-common wget git \
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq software-properties-common wget git curl \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
     && add-apt-repository ppa:no1wantdthisname/ppa && apt-get update && apt-get -y upgrade \
