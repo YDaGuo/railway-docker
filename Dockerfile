@@ -32,11 +32,11 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Mousepad\) \{mousepad\} \<\>' /etc/X11/fluxbox/fluxbox-menu \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
  
-RUN echo 'export DISPLAY=0' >>/bootstrap.sh \
-  && echo 'Xvfb -screen 0 "${CUSTOM_XVFB_WxHxD:=1920x1080x16}" -ac -pn -noreset &' >>/bootstrap.sh \
+RUN echo 'export DISPLAY=2' >>/bootstrap.sh \
+  && echo 'Xvfb -screen 2 "${CUSTOM_XVFB_WxHxD:=1366x800x16}" -ac -pn -noreset &' >>/bootstrap.sh \
   && echo '$WINDOW_MANAGER &' >>/bootstrap.sh \
-  && echo 'x11vnc -localhost -shared -display :1 -forever -rfbport 5900 -bg -o "/tmp/x11vnc-0.log" ' >>/bootstrap.sh \
-  && echo 'cd /opt/novnc/utils && ./novnc_proxy --vnc "localhost:5900" --listen 80 &' >>/bootstrap.sh \
+  && echo 'x11vnc -localhost -shared -display :1 -forever -rfbport 5902 -bg -o "/tmp/x11vnc-2.log" ' >>/bootstrap.sh \
+  && echo 'cd /opt/novnc/utils && ./novnc_proxy --vnc "localhost:5902" --listen 80 &' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE 80
 CMD  /bootstrap.sh
