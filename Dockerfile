@@ -34,7 +34,7 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
  
 RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
-  && echo 'ls /etc/nginx' >>/bootstrap.sh \
+  && echo 'ls /etc/nginx/sites-enabled' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
