@@ -15,7 +15,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq softwar
 # overwrite this env variable to use a different window manager
 ENV LANG="zh_CN.UTF-8" 
 ENV WINDOW_MANAGER="fluxbox"
-ENV PORT="80"
 
 # Install novnc
 RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
@@ -34,7 +33,7 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  && sed -ri '/Automatically generated/a\   \[exec\] \(Firefox\) \{firefox\} \<\>' /etc/X11/fluxbox/fluxbox-menu 
  
 RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
-  && echo 'ls /etc/nginx/sites-enabled' >>/bootstrap.sh \
+  && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
