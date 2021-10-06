@@ -41,4 +41,5 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'curl http://localhost:$PORT' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
+  
 CMD  /bootstrap.sh
