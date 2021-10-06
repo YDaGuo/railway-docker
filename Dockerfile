@@ -34,7 +34,7 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  
 RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'start-vnc-session.sh &' >>/bootstrap.sh \
-  && echo 'sed -ri s/80 default_server/$PORT default_server/g /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
+  && echo 'sed -ri "s/80 default_server/$PORT default_server/g" /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
