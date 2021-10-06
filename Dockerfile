@@ -37,10 +37,9 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
-  && echo 'cp /usr/sbin/nginx /usr/sbin/ngrouter' >>/bootstrap.sh \
-  && echo 'ngrouter -g "daemon on; master_process on;" &' >>/bootstrap.sh \
+  && echo 'nginx -g "daemon on; master_process on;" &' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
-  && echo 'curl http://localhost' >>/bootstrap.sh \
+  && echo 'curl http://localhost:80' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE 80
 CMD  /bootstrap.sh
