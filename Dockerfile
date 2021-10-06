@@ -43,5 +43,5 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'curl http://127.0.0.1:6080' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
-EXPOSE 80
+EXPOSE 80 6080 6081
 CMD  /bootstrap.sh
