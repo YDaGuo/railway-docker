@@ -1,5 +1,7 @@
 FROM ubuntu
 
+ARG PORT
+
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq software-properties-common wget git curl \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
@@ -43,5 +45,5 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'curl http://localhost:$PORT' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
-EXPOSE 80 6080 6081
+EXPOSE ${PORT}
 CMD  /bootstrap.sh
