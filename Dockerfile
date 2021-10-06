@@ -1,7 +1,5 @@
 FROM ubuntu
 
-ARG PORT
-
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq software-properties-common wget git curl \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
@@ -38,12 +36,9 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'start-vnc-session.sh &' >>/bootstrap.sh \
   && echo 'sed -ri "s/80 default_server/$PORT default_server/g" /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
-  && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
   && echo 'nginx -g "daemon on; master_process on;" &' >>/bootstrap.sh \
-  && echo 'ps -aux' >>/bootstrap.sh \
   && echo 'curl http://localhost:$PORT' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
-EXPOSE ${PORT}
 CMD  /bootstrap.sh
