@@ -34,13 +34,13 @@ RUN git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc \
  
 RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'start-vnc-session.sh &' >>/bootstrap.sh \
+  && sed -ri 's/80/$PORT/g' /etc/nginx/sites-enabled/default \
   && echo 'cat /etc/nginx/sites-enabled/default' >>/bootstrap.sh \
   && echo 'echo $PORT' >>/bootstrap.sh \
   && echo 'nginx -t' >>/bootstrap.sh \
   && echo 'nginx -g "daemon on; master_process on;" &' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
-  && echo 'curl http://localhost:80' >>/bootstrap.sh \
-  && echo 'curl http://127.0.0.1:6080' >>/bootstrap.sh \
+  && echo 'curl http://localhost:$PORT' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
 EXPOSE 80 6080 6081
