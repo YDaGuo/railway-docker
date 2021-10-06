@@ -42,4 +42,6 @@ RUN echo 'export DISPLAY=:0' >>/bootstrap.sh \
   && echo 'ps -aux' >>/bootstrap.sh \
   && chmod +x /bootstrap.sh
   
+EXPOSE 8088  
+  
 CMD  /bootstrap.sh
